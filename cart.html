@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        /* General styling for product cards */
+.product-card {
+    display: inline-block;
+    width: 200px;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .product-card button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .product-card button:hover {
+    background-color: #218838;
+  }
+  
+  /* Cart Styling */
+  #cart {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 300px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  #cart-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .cart-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .cart-item img {
+    width: 50px;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .cart-item-details {
+    flex-grow: 1;
+    margin-left: 10px;
+  }
+  
+  .buy-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .buy-button:hover {
+    background-color: #0056b3;
+  }
+    </style>
+</head>
+<body>
+
+    <div class="product-card" id="product-1">
+        <img src="https://cdn.pixabay.com/photo/2020/07/18/16/56/plant-5417765_1280.jpg" alt="Product 1">
+        <div class="product-name">Succulent</div>
+        <div class="product-price">Rs 120.00</div>
+        <button onclick="addToCart(1)">click to Buy</button>
+      </div>
+      <div class="product-card" id="product-1">
+        <img src="https://cdn.pixabay.com/photo/2017/08/10/14/40/aloe-vera-2623317_640.jpg" alt="Product 1">
+        <div class="product-name">Succulent</div>
+        <div class="product-price">Rs 120.00</div>
+        <button onclick="addToCart(1)">click to Buy</button>
+      </div>
+      <div class="product-card" id="product-1">
+        <img src="https://cdn.pixabay.com/photo/2015/06/25/14/13/fern-821293_640.jpg" alt="Product 1">
+        <div class="product-name">Fern plant</div>
+        <div class="product-price">Rs 340.00</div>
+        <button onclick="addToCart(1)">click to Buy</button>
+      </div>
+      
+      <div id="cart">
+        <div id="cart-header">Cart (<span id="cart-count">0</span> items)</div>
+        <ul id="cart-items" class="cart-items"></ul>
+        <button class="buy-button" onclick="alert('Proceed to checkout')">Buy Now</button>
+      </div>
+      
+      <footer>
+        <p>&copy; 2024 Plant Haven. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
+            <a href="#">Twitter</a>
+        </div>
+    </footer>
+
+<script>
+    let cart = [];
+  
+    function addToCart(productId) {
+      // Simulate product movement
+      const productCard = document.getElementById('product-' + productId);
+      productCard.classList.add('moving-to-cart');
+  
+      setTimeout(() => {
+        // Actually add product to cart
+        cart.push({
+          id: productId,
+          name: productCard.querySelector('.product-name').innerText,
+          image: productCard.querySelector('img').src,
+          price: productCard.querySelector('.product-price').innerText
+        });
+  
+        updateCart();
+        productCard.classList.remove('moving-to-cart');
+      }, 600); // Match animation time
+    }
+  
+    function updateCart() {
+      const cartElement = document.getElementById('cart-items');
+      cartElement.innerHTML = '';
+  
+      cart.forEach(item => {
+        const cartItem = document.createElement('li');
+        cartItem.classList.add('cart-item');
+  
+        cartItem.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" />
+          <div class="cart-item-details">
+            <span>${item.name}</span><br/>
+            <span>${item.price}</span>
+          </div>
+        `;
+  
+        cartElement.appendChild(cartItem);
+      });
+  
+      document.getElementById('cart-count').innerText = cart.length;
+    }
+  
+    function showCart() {
+      document.getElementById('cart').classList.toggle('visible');
+    }
+  </script>
+  
+
+</body>
+</html>
